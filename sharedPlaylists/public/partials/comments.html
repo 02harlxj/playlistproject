@@ -1,0 +1,27 @@
+<div class="full-height comments" ng-controller="CommentsCtrl">
+    <div class="comment-head">
+        <div class="hide-comments" ng-click="hideSidebar()"></div>
+        <div class="commented">
+            <h5>{{a.commenting.title}}</h5>
+            <p>{{a.commenting.artist}}</p>
+        </div>
+    </div>
+    <div class="comment-body">
+        <div class="comment-wrap" ng-repeat="comment in a.commenting.comments">
+            <div class="commenter-pic"><img ng-src="{{comment.user.photoUrl}}"/></div>
+            <div class="comment-content">
+                <div class="comment">
+                    <span class="commenter-name">{{comment.user.fullName}}</span> {{comment.comment}}
+                </div>
+                <div class="comment-meta">
+                    <span class="like liked"></span>
+                    <span class="comment-time">{{comment.time | date}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="comment-wrap">
+            <div class="commenter-pic"><img ng-src="{{user.photoUrl}}"/></div>
+            <input type="text" placeholder="Write a comment..." ng-model="comment" ng-enter="makeComment(comment)"/>
+        </div>
+    </div>
+</div>

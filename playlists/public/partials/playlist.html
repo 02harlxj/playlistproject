@@ -1,0 +1,57 @@
+<section class="container-fluid full-height">
+   
+    <div id="sidebar" class="full-height comments" ng-if="a.sidebarview === 'editing'" ng-include="'partials/editing.html'"></div>
+  
+    <div class="row playlist-head">
+        <div class="col-xs-4">
+        	<div class="showInput" ng-if="!tab.renaming" ng-click="showRename()">{{playlist.name}}</div>
+        	<input class="showInput" name="input" ng-if="tab.renaming" ng-model="newName" ng-enter="renamePlaylist(newName)" autofocus></input>
+        </div>
+        <div class="col-xs-4">
+            <input type="text" placeholder="Search" ng-model="search"></input>
+        </div>
+        <div class="col-xs-4">
+            <div class="row">
+                <div class="remove-playlist" ng-click="removePlaylist(playlist.name)">Delete</div>
+            </div>
+            <div class="row">
+                <div class="remove-playlist" ng-if="!playlist.private" ng-click="privacy(true)" title="Friends can see this playlist">Visible</div>
+                <div class="remove-playlist" ng-if="playlist.private" ng-click="privacy(false)" title="Only you can see this playlist">Hidden</div>
+            </div>
+        </div>
+    </div>
+    <div class="row playlist-thead">
+        <div change-order="order" class="hidden-xs col-sm-1">#</div>
+        <div change-order="title" class="col-xs-4">Title</div>
+        <div change-order="artist" class="col-xs-4 col-sm-3">Artist</div>
+        <div change-order="added" class="col-xs-2 truncate">Date Added</div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+    </div>
+    <div class="row playlist-body">
+        <ul class="playlist-item-list">
+             <li class="addSongBtn">
+                <div class="songInput songInputShow" ng-if="!tab.addingSong" ng-click="showAddSong()"></div>
+                <input class="songInput" placeholder="url of the song or video" ng-if="tab.addingSong" ng-model="songUrl" ng-enter="getSongDetails(songUrl)" autofocus></input>
+            </li>
+            <li ng-repeat="song in playlist.songs | filter:search | orderBy:order:reverse track by $index " ng-class="{'drop':order == 'order'}" ng-drop="true" ng-drop-success="onDropComplete($index, $data)">
+                <div ng-show="a.currentSong === song._id" class="now-playing"></div>
+                <div ng-drag="true" ng-drag-data="song" draggable="false" play-song='playlist' index="{{$index}}">
+                    <div class="hidden-xs col-sm-1">{{song.order}}</div>
+                    <div class="col-xs-4 truncate">{{song.title}}</div>
+                    <div class="col-xs-4 col-sm-3 truncate">{{song.artist}}</div>
+                    <div class="col-xs-2 truncate">{{song.added | date:'yyyy-dd-MM, h:mm a'}}</div>
+                    <div class="col-xs-1 edit" ng-click="showSidebar(song, 'editing')"></div>
+                    <div class="col-xs-1 delete" ng-click="deleteSong(song)"></div>
+                </div>
+            </li>
+            <div ng-show="!playlist.songs.length" class="row explanation">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <p>When you add songs to a playlist, they are also added to your library!</p>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </ul>
+    </div>
+</section> 

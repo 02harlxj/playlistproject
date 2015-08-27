@@ -1,0 +1,17 @@
+<section id="friends">
+	<div class="row" ng-repeat="row in rows">
+		<div class="col-xs-4" ng-repeat="friend in row">
+			<div class="friend-wrap" ui-sref="userprofile({userId: friend._id})">
+				<div class="person-img-wrap">
+					<div class="img">
+						<img ng-src="{{friend.photoUrl}}"/>
+					</div>
+				</div>
+				<div class="person-content-wrap">
+					<h5>{{friend.fullName}}</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>

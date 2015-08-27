@@ -1,0 +1,12 @@
+<img ng-src="{{person.photoUrl}}"/>
+<div class="approve-name">
+	<h5>{{person.fullName}}</h5>
+</div>
+<div class="approve-decide">
+	<div class="approve" ng-click="approve(person)">
+		<span>approve</span><div class="approve-icon"></div>
+	</div>
+	<div class="decline" ng-click="reject(person)">
+		<span>reject</span><div class="decline-icon"></div>
+	</div>
+</div>

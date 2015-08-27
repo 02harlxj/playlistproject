@@ -1,0 +1,66 @@
+<section id="events">
+    <div class="container-fluid full-height">
+        <div class="row full-height">
+        <div class="col-xs-9 col-sm-8 col-md-6 full-height">
+            <div class="cal full-height">
+                <div class="head">
+                    <div class="current-month">
+                        <div class="prev" ng-click="prevMonth()"></div>
+                        {{current_date | date: 'MMMM yy'}}
+                         <div class="next" ng-click="nextMonth()"></div>
+                    </div>
+                </div>
+                <div class="cal-body">
+                	<loading-icon></loading-icon>
+                    <ul loading-content>
+                        <li class="event-item row" ng-repeat="event in events">
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-2">
+                                <div class="event-date">
+                                    <div class="date-day">{{event.datetime | date: 'dd'}}</div>
+                                    <div class="date-month">{{event.datetime | date: 'MMM'}}</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="event-pic"></div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="event-detail-wrap">
+                                    <h5>{{event.artists[0].name}}</h5>
+                                    <p>{{event.venue.name}}</p>
+                                    <!--<p class="price">$20</p>-->
+                                </div>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </li>
+                    </ul>
+                    <div class="pages">
+                    	<div class="prev" ng-if="page>1" ng-click="prevPage()"></div>
+                    	<div class="next" ng-if="events.length==20" ng-click="nextPage()"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hidden-xs hidden-sm col-md-4">
+            <div class="featured">
+                <div class="head">
+                    <h1>Location: <span class="city">Manchester</span></h1>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-4 col-md-2 full-height">
+            <div class="artists row">
+                <input type="text" ng-model="artistName" ng-enter="addArtist(artistName)"/>
+                <ul>
+                	<li ng-repeat="artist in user.artistList | orderBy: 'name'" artist-list></li artist-list>
+                    <li ng-show="!user.artistList.length">
+                        <p>You have no artists in you artist list.</p>
+                        <p>When you add a song, the artist will be added to this list</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>

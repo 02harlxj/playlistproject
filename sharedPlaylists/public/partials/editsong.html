@@ -1,0 +1,23 @@
+<div ng-controller="EditSongControl">
+    <div class="comment-head">
+        <div class="hide-comments" ng-click="hideSidebar()"></div>
+        <div class="commented member">
+            <h5>Edit: <b>{{a.currentlyEditing.title}}</b></h5>
+        </div>
+    </div>
+    <div class="edit-body">
+        <table>
+            <tr>
+                <td>Title:</td>
+                <td><input type="text" ng-model="song.title"/></td>
+            </tr>
+            <tr>
+                <td>Artist:</td>
+                <td><input type="text" ng-model="song.artist"/></td>
+            </tr>
+        </table>
+    </div>
+    <div class="add-member-foot">
+         <div class="add-member-button" ng-click="editSharedSong(song)">Save</div>
+    </div>
+</div>

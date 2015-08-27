@@ -1,0 +1,63 @@
+<div ng-if="private" class="container-fluid full-height">
+    <h1>This playlist is private!</h1>
+</div>
+<section ng-if="!private" id="shared" class="full-height">
+    <div class="container-fluid full-height">
+        <div class="row full-height">
+            <div class="col-xs-11 col-lg-10 full-height">
+                <div class="row playlist-head">
+                    <div class="col-xs-4">{{playlist.name}}</div>
+                    <div class="col-xs-4">
+                        <input type="text" placeholder="Search" ng-model="search" ng-change="searchPlaylist(search)"/>
+                    </div>
+                </div>
+                <div class="row playlist-thead">
+                    <div ng-click="changeOrder('title')" class="col-xs-3 col-sm-4 title" ng-class="{ 'sortUp': currentOrder === 'title', 'sortDown': currentOrder === '-title' }">Title</div>
+                    <div ng-click="changeOrder('artist')"class="col-xs-3" ng-class="{ 'sortUp': currentOrder === 'artist', 'sortDown': currentOrder === '-artist' }">Artist</div>
+                    <div ng-click="changeOrder('added')"class="col-xs-2 truncate" ng-class="{ 'sortUp': currentOrder === 'added', 'sortDown': currentOrder === '-added' }">Date Added</div>
+                </div>
+                <div class="row playlist-body"  infinite-scroll>
+                    <ul class="playlist-item-list">
+                        <li ng-repeat="song in playlist.songs track by $index" play-song="shared" index="{{$index}}">
+                            <div ng-show="a.currentSong === song._id" class="now-playing"></div>
+                            <div ng-drag="true" ng-drag-data="song" draggable="false" class="cont">
+                                <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4 truncate">
+                                    <img title="{{song.addedBy.fullName}}" ng-src="{{song.addedBy.photoUrl}}"/>
+                                    {{song.title}}
+                                </div>
+                                <div class="col-xs-3 truncate">{{song.artist}}</div>
+                                <div class="col-lg-3 truncate">{{song.added | date:'yyyy-dd-MM, h:mm a'}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-1 col-lg-2 members">
+                <ul class="row">
+                    <!--Admins -->
+                    <li class="member" ng-if="pending === false" ng-click="requestJoin()">
+                        Ask to join
+                    </li>
+                    <li class="member" ng-if="pending">
+                        Pending admin approval
+                    </li>
+                    <li class="member" ng-repeat='user in playlist.admins' ui-sref="userprofile({userId:user._id})">
+                        <div class="img-wrap"><img height='40px' width='40px' ng-src="{{user.photoUrl}}"/></div>
+                        <div class="details-wrap visible-lg">
+                            <div class="name truncate">{{user.fullName}}</div>
+                            <div class="type">Admin</div>
+                        </div>
+                    </li>
+                    <!--Users -->
+                    <li class="member" ng-repeat='user in playlist.users' ui-sref="userprofile({userId:user._id})">
+                        <div class="img-wrap"><img height='40px' width='40px' ng-src="{{user.photoUrl}}"/></div>
+                        <div class="details-wrap truncate visible-lg">
+                            <div class="name">{{user.fullName}}</div>
+                            <div class="type">Member</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

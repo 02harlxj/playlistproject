@@ -1,0 +1,55 @@
+<div class="container-fluid full-height">
+
+    <div id="sidebar" class="full-height comments" ng-if="a.sidebarview === 'editing'" ng-include="'partials/editing.html'"></div>
+
+    <div class="row playlist-head">
+        <div class="col-xs-4"><span ng-if="!tab.addingSong">Library</span></div>
+        <div class="col-xs-4">
+            <div class="addSongBtn">
+                <div class="songInput songInputShow" ng-if="!tab.addingSong" ng-click="showAddSong()"><span class="truncate">Add to Library</span></div>
+                <input class="songInput" placeholder="url of the song or video" ng-if="tab.addingSong" ng-model="songUrl" ng-enter="getSongDetails(songUrl)" autofocus></input>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <input ng-if="!tab.addingSong" type="text" placeholder="Search" ng-model="search" ng-change="searchLibrary(search)"/>
+        </div>
+    </div>
+    <div class="row playlist-thead">
+        <div class="hidden-xs col-sm-1 align-center">#</div>
+        <div ng-click="changeOrder('title')" class="col-xs-4" ng-class="{ 'sortUp': currentOrder === 'title', 'sortDown': currentOrder === '-title' }">Title</div>
+        <div ng-click="changeOrder('artist')" class="col-xs-4 col-sm-3" ng-class="{ 'sortUp': currentOrder === 'artist', 'sortDown': currentOrder === '-artist' }">Artist</div>
+        <div ng-click="changeOrder('added')" class="col-xs-2 truncate" ng-class="{ 'sortUp': currentOrder === 'added', 'sortDown': currentOrder === '-added' }">Date Added</div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+    </div>
+    <div class="row playlist-body" infinite-scroll>
+        <ul class="playlist-item-list">
+            <li ng-repeat="song in user.library track by $index" play-song="library" index="{{$index}}">
+                <div ng-show="a.currentSong === song._id" class="now-playing"></div>
+                <div ng-drag="true" ng-drag-data="song" draggable="false">
+                    <div class="hidden-xs col-sm-1 align-center">{{$index + 1}}</div>
+                    <div class="col-xs-4 truncate">{{song.title}}</div>
+                    <div class="col-xs-4 col-sm-3 truncate">{{song.artist}}</div>
+                    <div class="col-xs-2 truncate">{{song.added | date:'yyyy-dd-MM, h:mm a'}}</div>
+                    <div class="col-xs-1 edit" ng-click="showSidebar(song, 'editing')"></div>
+                    <div class="col-xs-1 delete" ng-click="removeSong(song)"></div>
+                </div>
+            </li>
+            <div ng-show="!user.library.length" class="row explanation">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <h1>Welcome to NAME</h1>
+                    <p>To add songs to your library, click on the plus symbol above.</p>
+                    <p>Then, just paste the url of the song you wish to add and press enter!</p>
+                    <p>The following platforms are supported:</p>
+                    <div class="row">
+                        <div class="col-md-4 align-center"><img src="img/soundcloud_logo.png" width="150px"/></div>
+                        <div class="col-md-4 align-center"><img src="img/vimeo_logo.png" width="100px"/></div>
+                        <div class="col-md-4 align-center"><img src="img/youtube_logo.png" width="100px"/></div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </ul>
+    </div>
+</div> 

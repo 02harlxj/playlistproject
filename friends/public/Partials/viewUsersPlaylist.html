@@ -1,0 +1,36 @@
+<div ng-if="private" class="container-fluid full-height">
+    <h1>This playlist is private!</h1>
+</div>
+
+<div ng-if="!private" class="container-fluid full-height">
+    <div class="row playlist-head">
+    	<div class="col-xs-1">
+    		<img height="33px" ng-src="{{playlist.user.photoUrl}}"/>
+    	</div>
+        <div class="col-xs-6">
+        	{{playlist.name}} by <a ui-sref="userprofile({userId:playlist.user._id})">{{playlist.user.fullName}}</a>
+        </div>
+        <div class="col-xs-5">
+            <input type="text" placeholder="Search" ng-model="search"></input>
+        </div>
+    </div>
+    <div class="row playlist-thead">
+        <div change-order="order" class="hidden-xs col-sm-1">#</div>
+        <div change-order="title" class="col-xs-5">Title</div>
+        <div change-order="artist" class="col-xs-4 col-sm-3">Artist</div>
+        <div change-order="added" class="col-xs-3 truncate">Date Added</div>
+    </div>
+    <div class="row playlist-body">
+        <ul class="playlist-item-list">
+            <li ng-repeat="song in playlist.songs | filter:search | orderBy:order:reverse track by $index">
+                <div ng-show="a.currentSong === song._id" class="now-playing"></div>
+                <div ng-drag="true" ng-drag-data="song" draggable="false" play-song='playlist' index="{{$index}}">
+                    <div class="hidden-xs col-sm-1">{{song.order}}</div>
+                    <div class="col-xs-5">{{song.title}}</div>
+                    <div class="col-xs-4 col-sm-3">{{song.artist}}</div>
+                    <div class="col-xs-3">{{song.added | date:'yyyy-dd-MM, h:mm a'}}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div> 

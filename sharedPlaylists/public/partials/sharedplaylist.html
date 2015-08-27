@@ -1,0 +1,91 @@
+<section id="shared" class="full-height">
+    <div class="container-fluid full-height">
+        <div class="row full-height">
+            <div class="col-xs-11 col-lg-10 full-height">
+                <div class="row playlist-head">
+                    <div class="col-xs-4">{{playlist.name}}</div>
+                    <div class="col-xs-2">
+                        <div class="remove-playlist"></div>
+                    </div>
+                    <div class="col-xs-4">
+                        <input type="text" placeholder="Search" ng-model="search" ng-change="searchPlaylist(search)"/>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="leaveIcon" ng-click="leave()"></div>
+                        <div class="settingsIcon" ng-if="is_admin" ng-click="settingsShow()"></div>
+                    </div>
+                </div>
+                <div class="row playlist-thead">
+                    <div ng-click="changeOrder('title')" class="col-xs-3 col-sm-4 title" ng-class="{ 'sortUp': currentOrder === 'title', 'sortDown': currentOrder === '-title' }">Title</div>
+                    <div ng-click="changeOrder('artist')"class="col-xs-3" ng-class="{ 'sortUp': currentOrder === 'artist', 'sortDown': currentOrder === '-artist' }">Artist</div>
+                    <div ng-click="changeOrder('added')"class="col-xs-2 truncate" ng-class="{ 'sortUp': currentOrder === 'added', 'sortDown': currentOrder === '-added' }">Date Added</div>
+                    <div class="col-xs-4 col-sm-3 col-md-2"></div>
+                </div>
+                <div class="row playlist-body"  infinite-scroll>
+                    <ul class="playlist-item-list">
+                        <li class="addSongBtn">
+                            <div class="songInput songInputShow" ng-if="!tab.addingSong" ng-click="showAddSong()"></div>
+                            <input class="songInput" placeholder="url of the song or video" ng-if="tab.addingSong" ng-model="songUrl" ng-enter="getSongDetails(songUrl)" autofocus></input>
+                        </li>
+                        <li ng-repeat="song in playlist.songs track by $index" play-song="shared" index="{{$index}}">
+                            <div ng-show="a.currentSong === song._id" class="now-playing"></div>
+                            <div ng-drag="true" ng-drag-data="song" draggable="false" class="cont">
+                                <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4 truncate">
+                                    <img title="{{song.addedBy.fullName}}" ng-src="{{song.addedBy.photoUrl}}"/>
+                                    {{song.title}}
+                                </div>
+                                <div class="col-xs-3 truncate">{{song.artist}}</div>
+                                <div class="col-lg-3 truncate" ng-class="is_admin ? 'col-xs-2 col-sm-2 col-md-2' : 'col-xs-3 col-sm-3 col-md-3'">{{song.added | date:'yyyy-dd-MM, h:mm a'}}</div>
+                                <div class="actions col-lg-2" ng-class="is_admin ? 'col-xs-4 col-sm-4 col-md-3' : 'col-xs-3 col-sm-3 col-md-2'">
+                                    <ul class="row">
+                                        <li class="like unliked" like-btn>{{song.likedBy.length}}</li>
+                                        <li class="comment" ng-click="commentsShow(song)">{{song.comments.length}}</li>
+                                        <li class="delete" ng-click="deleteSong(song)" ng-if="is_admin"></li>
+                                        <li class="edit" ng-click="editSongShow(song)" ng-if='is_admin'></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-1 col-lg-2 members">
+                <ul class="row">
+                    <!--Admins -->
+                    <li ng-if="is_admin && playlist.users_waiting_approval.length > 0" class="approval" ng-click="approvalShow()">
+                        <span class="visible-lg visible-xl">Awaiting Approval</span>
+                        <div class="count">{{playlist.users_waiting_approval.length}}</div>
+                    </li>
+                    <!--Admins -->
+                    <li class="member" ng-repeat='user in playlist.admins' ui-sref="userprofile({userId: user._id})">
+                        <div class="img-wrap"><img height='40px' width='40px' ng-src="{{user.photoUrl}}"/></div>
+                        <div class="details-wrap visible-lg">
+                            <div class="name truncate">{{user.fullName}}</div>
+                            <div class="type">Admin</div>
+                        </div>
+                    </li>
+                    <!--Users -->
+                    <li class="member" ng-repeat='user in playlist.users' ui-sref="userprofile({userId: user._id})">
+                        <div class="img-wrap"><img height='40px' width='40px' ng-src="{{user.photoUrl}}"/></div>
+                        <div class="details-wrap truncate visible-lg">
+                            <div class="name">{{user.fullName}}</div>
+                            <div class="type">Member</div>
+                        </div>
+                        <div class="options" ng-if="is_admin">
+                            <div class="remove-user" title="remove from playlist" ng-click="removeuser(user)"></div>
+                            <div class="make-admin" title="make admin" ng-click="makeadmin(user)"></div>
+                        </div>
+                    </li>
+                    <li class="add-member" ng-click="addMemberShow()" ng-if="is_admin || perms.memberAdd!='admin_only'"></li>
+                </ul>
+            </div>
+            
+            <div id="sidebar" class="full-height comments" ng-if="a.sidebarview === 'addmembers'" ng-include="'partials/addmembers.html'"></div>
+            <div id="sidebar" class="full-height comments" ng-if="a.sidebarview === 'settings'" ng-include="'partials/settings.html'"></div>
+            <div id="sidebar" class="full-height comments" ng-if="a.sidebarview === 'comments'" ng-include="'partials/comments.html'"></div>
+            <div id="sidebar" class="full-height comments" ng-if="a.sidebarview === 'editsong'" ng-include="'partials/editsong.html'"></div>
+            <div id="sidebar" class="full-height comments" ng-if="a.sidebarview === 'approval'" ng-include="'partials/approval.html'"></div>
+
+        </div>
+    </div>
+</section>

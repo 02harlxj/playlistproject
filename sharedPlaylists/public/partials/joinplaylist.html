@@ -1,0 +1,43 @@
+<section id="shared" class="full-height join">
+    <div class="container-fluid full-height">
+        <div class="row decision">
+            <div class="col-xs-6">
+                <div class="decisionBtn accept" ng-click="join()">Join</div>
+            </div>
+            <div class="col-xs-6">
+                <div class="decisionBtn reject" ng-click="decline()">Cancel</div>
+            </div>
+        </div>
+        <div class="row decision playlist-details">
+            <h1>{{playlist.name}}</h1>
+            <div class="desc">{{playlist.settings.desc}}</div>
+        </div>
+        <div class="row decision playlist-cont">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8 full-height">
+                <div class="row">Members</div>  
+                <div class="row">
+                    <div class="person selected" ng-repeat="person in playlist.admins">
+                        <div class="person-img-wrap">
+                            <div class="img"><img ng-src="{{person.photoUrl}}"/></div>
+                        </div>
+                        <div class="person-content-wrap">
+                            <h5>{{person.fullName}}</h5>
+                            <p>Admin</p>
+                        </div>
+                    </div>
+                    <div class="person selected" ng-repeat="person in playlist.users">
+                        <div class="person-img-wrap">
+                            <div class="img"><img ng-src="{{person.photoUrl}}"/></div>
+                        </div>
+                        <div class="person-content-wrap">
+                            <h5>{{person.fullName}}</h5>
+                            <p>Member</p>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+    </div>
+</section>

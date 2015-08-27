@@ -1,0 +1,14 @@
+<div class="notif-wrap" ng-controller="NotificationCtrl">
+    <div class="notif-head showNTab">
+        <div class="notif-nub"></div>
+        <h4>Notifications</h4>
+    </div>
+    <div class="notif-body">
+        <div class="scrollable showNTab">
+            <div class="notif-item" ng-repeat="notif in notifications" ng-class="{'seen': notif.viewed}" ng-click="notifShow(notif)">
+                <notif-item></notif-item>
+            </div>
+        </div>
+    </div>
+    <div class="notif-foot"></div>
+</div>

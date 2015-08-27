@@ -1,0 +1,39 @@
+<section id="profile">
+	<div class="row">
+		<div class="col-xs-4 col-md-2 col-lg-1">
+			<img ng-src="{{friend.photoUrl}}"/>
+		</div>
+		<div class="col-xs-8 col-md-10 col-lg-10">
+			<h1>{{friend.fullName}}</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4">
+			<div class="list recent">
+				<h6>Recently Added</h6>
+				<ul>
+					<li ng-repeat="song in friend.library track by $index" play-song='playlist' index="{{$index}}">
+						<div class="col-xs-6">{{song.title}}</div>
+						<div class="col-xs-6">{{song.artist}}</div>
+					</li>
+				</ul>
+		    </div>
+		</div>
+		<div class="col-xs-4">
+			<div class="list playlist">
+				<h6>Playlists</h6>
+				<ul>
+					<li ng-repeat="playlist in friend.playlists" ui-sref="userplaylist({userId: friend._id, playlistId: playlist._id})">{{playlist.name}}</li>
+				</ul>
+		    </div>
+		</div>
+		<div class="col-xs-4">
+			<div class="list playlist">
+				<h6>Shared Playlists</h6>
+				<ul>
+					<li ng-repeat="playlist in friend.sharedPlaylists" ui-sref="sharedplaylistguest({playlistId: playlist._id})">{{playlist.name}}</li>
+				</ul>
+		    </div>
+		</div>
+	</div>
+</section>

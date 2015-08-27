@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-xs-6 col-sm-12">
+        <div class="row" ng-switch on="provider">
+            <div ng-switch-when="none"></div>
+			<div ng-switch-when="youtube"><youtube-vid video-id="videoId"></youtube-vid></div>
+			<div ng-switch-when="soundcloud"><soundcloud-vid video-id="videoId"></soundcloud-vid></div>
+			<div ng-switch-when="vimeo"><vimeo-vid video-id="videoId"></vimeo-vid></div>
+		</div>
+    </div>
+    <div class="col-xs-6 col-sm-12">
+        
+        <div class="player-details-wrap center">
+            <h4 class="truncate">{{song.title}}</h4>
+            <p>{{song.artist}}</p>
+        </div>
+        <div class="player-controls-wrap">
+            <div class="col-xs-4 player-prev" ng-click="prev()"></div>
+            <div class="col-xs-4 player-start" ng-if="!playingnow" ng-click="start()"></div>
+            <div class="col-xs-4 player-stop" ng-if="playingnow" ng-click="pause()"></div>
+            <div class="col-xs-4 player-next" ng-click="next()"></div>
+        </div>
+        <form><input type="range" min="0" max="100" data-ng-model="volume.num" ng-model-options="{debounce: 200}"/></form>
+    </div>
+</div>

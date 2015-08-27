@@ -1,0 +1,46 @@
+<div class="full-height comments" ng-controller="SettingsCtrl">
+    <div class="comment-head">
+        <div class="hide-comments" ng-click="hideSidebar()"></div>
+        <div class="commented member">
+            <h5>Settings</b></h5>
+        </div>
+    </div>
+    <div class="settings-body">
+        <form novalidate >
+            <table>
+                <tr>
+                    <td class="slabel">Playlist Name</td>
+                    <td class="soptions"><input type="text" ng-model="settings.name" placeholder="name"></td>
+                </tr>
+                <tr>
+                    <td class="slabel">Member Approval</td>
+                    <td class="soptions">
+                        <input type="radio" ng-model="settings.memberAdd" value="anybody"> 
+                        <label><span></span></label>Any member can add members
+                        <br>
+                        <input type="radio" ng-model="settings.memberAdd" value="approval_required"> Any member can add members, but an admin must approve them
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="slabel">Description</td>
+                    <td class="soptions"><textarea rows="3" ng-model="settings.desc">desc</textarea></td>
+                </tr>
+                <tr>
+                    <td class="slabel">Privacy Settings</td>
+                    <td class="soptions">
+                        <input type="radio" ng-model="settings.private" data-ng-value="true"> Private playlist
+                        <br>
+                        <input type="radio" ng-model="settings.private" data-ng-value="false"> Friends can view this playlist
+                        <br>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="settings-foot">
+                 <input type="submit" class="add-member-button" ng-click="update(settings)" value="Save" />
+            </div>
+            
+        </form>
+    </div>
+</div>

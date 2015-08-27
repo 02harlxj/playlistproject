@@ -1,0 +1,19 @@
+<div class="modal-header checkSongImg">
+    <img ng-src="{{img}}" />
+</div>
+<div class="modal-body checkSongWrap">
+    <form ng-if="found">
+        <label>Title</label>
+        <input ng-model="song.title"></input>
+        <label>Artist</label>
+        <input ng-model="song.artist"></input>
+        <div class="controls">
+            <button class="button" ng-click="ok(song)">Save</button>
+        </div>
+    </form>
+    <div class="notFound" ng-if="!found">
+        <p>The url you have entered does not seem to be valid.</p>
+        <p>Please enter the url of a page from Vimeo, Soundcloud or Youtube<p>
+    </div>
+
+</div>

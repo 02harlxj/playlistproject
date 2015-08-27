@@ -1,0 +1,5 @@
+<div class="img"><img ng-src="{{notif.sender.photoUrl}}"/></div>
+<div class="notif-detail-wrap">
+    <p><span ng-hide="notif.type === 'new_song'">{{notif.sender.fullName}}</span>{{notif.str}}<span>{{notif.playlistName}}</span></p>
+	<p class="date">{{notif.time}}</p>
+</div>

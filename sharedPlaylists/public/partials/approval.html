@@ -1,0 +1,16 @@
+<div class="full-height comments" ng-controller='ApproveMemberCtrl'>
+    <div class="comment-head">
+        <div class="hide-comments" ng-click="hideSidebar()"></div>
+        <div class="commented member">
+            <h5>Admin Approval Needed</h5>
+        </div>
+    </div>
+    <div class="comment-body add-member">
+        <div class="approve-content-wrap" ng-repeat='person in users'>
+            <approval-item id="{{person._id}}" img="{{person.photoUrl}}"></approval-item>
+        </div>
+        <div class="nullresult" ng-if="nullresult">Nothing Found</div>
+        
+    </div>
+
+</div>

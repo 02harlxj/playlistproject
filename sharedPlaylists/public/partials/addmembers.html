@@ -1,0 +1,24 @@
+<div class="full-height comments" ng-controller='AddMemberCtrl'>
+    <div class="comment-head">
+        <div class="hide-comments" ng-click="hideSidebar()"></div>
+        <div class="commented member">
+            <h5>Add Members to Playlist</h5>
+        </div>
+    </div>
+    <div class="comment-body add-member">
+        <div class="center">
+            <input type="text" ng-model="str" ng-change="search(str)"/>
+        </div>
+        <div class="person" ng-repeat='person in results'>
+            <result-item id="{{person._id}}" img="{{person.photoUrl}}"></result-item>
+        </div>
+        <div class="nullresult" ng-if="!results.length">Nothing Found</div>
+        
+    </div>
+    <div class="add-member-foot">
+        <ul>
+            <li ng-repeat="member in add.selected"><img ng-src="{{member.photoUrl}}" /></li>
+        </ul>
+         <div class="add-member-button" ng-click="addMembers()">Add</div>
+    </div>
+</div>

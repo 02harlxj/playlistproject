@@ -1,0 +1,172 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="" ng-app="MainApp"> <!--<![endif]-->
+    <head>
+        <base href="/">
+        <meta charset="utf-8">
+        <meta userId="<%= userId %>">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/flaticon/flaticon.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+        <script type="text/javascript">
+            var userId = '<%= userId %>';
+            socket = io();
+        </script>
+
+        <script src="vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
+        <script src="vendor/angular.min.js"></script>
+        <script src="vendor/ngDraggable.js"></script>
+        <script src="vendor/angular-ui-router.js"></script>
+        <script src="vendor/angular-animate.js"></script>
+        <script src="vendor/angular-resource.js"></script>
+        <script src="vendor/ui-bootstrap.min.js"></script>
+
+        <script src="//connect.soundcloud.com/sdk-2.0.0.js"></script>
+        <script src="https://w.soundcloud.com/player/api.js"></script>
+        <script src="https://www.youtube.com/player_api"></script>
+        <script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
+
+        <script src="js/Modules/Popup/popup.module.js"></script>
+        <script src="js/Modules/Player/player.module.js"></script>
+        <script src="js/Modules/Spinner/spinner.module.js"></script>
+        <script src="js/Modules/Socket/socket.public.module.js"></script>
+        
+        <script src="js/events.module.js"></script>
+
+        <script src="js/playlist.public.module.js"></script>
+        <script src="js/playlist.public.controller.js"></script>
+        <script src="js/playlist.public.service.js"></script>
+
+        <script src="sharedplaylist.public.module.js"></script>
+        <script src="services/sharedplaylist.public.service.js"></script>
+        <script src="services/sharedsong.public.service.js"></script>
+        <script src="controllers/sharedplaylist.public.controller.js"></script>
+        <script src="controllers/addmember.public.controller.js"></script>
+        <script src="controllers/settings.public.controller.js"></script>
+        <script src="controllers/approval.public.controller.js"></script>
+        <script src="directives/shared.public.directives.js"></script>
+
+        <script src="controllers/comments.public.controller.js"></script>
+
+        <script src="controllers/notif.public.controller.js"></script>
+        <script src="directives/notif.public.directives.js"></script>
+        <script src="services/notif.public.service.js"></script>
+
+        <script src="friends.module.js"></script>
+
+        <script src="js/main.public.module.js"></script>
+        <script src="js/main.public.services.js"></script>
+        <script src="js/main.public.controllers.js"></script>
+        <script src="js/main.public.directives.js"></script>
+    </head>
+    <body ng-controller="MainAppCtrl">
+
+        <div id="header-container">
+            <header class="wrapper clearfix">
+                <div class="logo"></div>
+                <!--
+                <div class="music-search hidden-xs">
+                    <input type="text" />
+                    <div class="search"></div>
+                </div>
+            -->
+                <div class="menu-head">
+                    <div class="settings launch">
+                        <div class="settings-icon icon showTab" ng-click="profileTabToggle()"></div>
+                        <!--================================
+                            Profile
+                        -->
+                        <div id="notif" class="profile" ng-show="tab.profileTabOpen">
+                            <div class="notif-wrap">
+                                <div class="notif-head showTab">
+                                    <div class="notif-nub"></div>
+                                    <h4>Profile</h4>
+                                </div>
+                                <div class="profile-body">
+                                    <div class="scrollable">
+                                        <div class="profile-item">
+                                            <a href="/signout"><div class="profile-logout">logout</div></a>
+                                        </div>
+                                        <!--
+                                        <div class="profile-item">
+                                            <div class="profile-settings" ng-click="deleteAccount()">settings</div>
+                                        </div>
+                                        -->
+                                    </div>
+                                </div>
+                                <div class="notif-foot showTab"></div>
+                            </div>
+                        </div>
+                        <!--================================
+                            Profile
+                        -->
+                    </div>
+                    <div class="notif launch">
+                        <div class="notif-icon icon showNTab" ng-click="notifTabToggle()">
+                            <div class="notifCount" ng-if="user.notifCount > 0">{{user.notifCount}}</div>
+                        </div>
+                        <div id="notif" ng-if="tab.notifTabOpen" ng-include="'partials/notifications.html'"></div>
+                    </div>
+                    <div class="menu launch visible-xs">
+                        <div class="menu-icon" ng-click="showMenu()"></div>
+                    </div>
+                    <div class="profile-pic launch hidden-xs">
+                        <img ng-src="{{user.photoUrl}}"/>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div id="main-container">
+            <div class="main-menu" ng-class="{'hidden-xs': menuHidden}">
+                <div class="menu-container">
+                    <ul class="menu-first">
+                        <li class="library menu-btn-top" ui-sref="library" ng-drop="true" ng-drop-success="dragToLibrary($data)" ui-sref-active='active'>Library</li>
+                        <li class="friends menu-btn-top" ui-sref="friends" ui-sref-active='active'>Friends</li>
+                        <li class="events menu-btn-top" ui-sref="events" ui-sref-active='active'>Events</li>
+
+                        <li class="parent">Playlists
+                            <ul class="playlist nested">
+                                <li ng-drop="true" ng-drop-success="dragToPlaylist($data, playlist)" class="playlist menu-btn-nest" ng-repeat="playlist in user.playlists" ui-sref="playlist({playlistId:playlist._id})" ui-sref-active='active'>{{playlist.name}}</li>
+                            </ul>
+
+                            <div class="add-playlist menu-btn-nest currentInput" ng-if="!tab.creatingPlaylist" ng-click="showAddPlaylist()"></div>
+                            <input type="text" class="currentInput" name="input" ng-model="newPlaylist" ng-if="tab.creatingPlaylist" ng-enter="createPlaylist(newPlaylist)" autofocus></input>
+                        </li>
+
+                        <li class="parent">Shared Playlists
+                            <ul class="playlist nested">
+                                <li ng-drop="true" ng-drop-success="dragToSharedPlaylist($data, playlist._id)" class="playlist menu-btn-nest" ng-repeat="playlist in user.sharedPlaylists" ui-sref="sharedplaylist({playlistId:playlist._id})" ui-sref-active='active' ui-sref-opts="{reload: true}">{{playlist.name}}</li>
+                            </ul>
+
+                            <div class="add-playlist menu-btn-nest sharedInput" ng-if="!tab.creatingSharedPlaylist" ng-click="showAddSharedPlaylist()"></div>
+                            <input type="text" class="sharedInput" name="input" ng-model="newPlaylist" ng-if="tab.creatingSharedPlaylist" ng-enter="createSharedPlaylist(newPlaylist)" autofocus></input>
+                        </li>
+                    </ul>
+                </div>
+            </div> <!-- /.main-menu -->
+            <div class="main-content" ng-class="{'show': a.showPlayer}">
+
+                <ui-view view-load></ui-view>
+
+            </div> <!-- /.main-content -->
+        </div> <!-- /#main-container -->
+        <div id="player-container" class="container-fluid" ng-class="{'show': a.showPlayer}" ng-controller="PlayerCtrl">
+            <div class="show-player" ng-click="showPlayer()"></div>
+            <div ng-include="'partials/player.html'"></div>
+        </div>
+
+    </body>
+    </html>

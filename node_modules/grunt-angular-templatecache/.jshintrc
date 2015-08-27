@@ -1,0 +1,12 @@
+{
+  "debug": true,
+  "eqeqeq": true,
+  "evil": true,
+  "freeze": true,
+  "noarg": true,
+  "nonew": true,
+  "node": true,
+  "strict": true,
+  "undef": true,
+  "unused": "vars"
+}
